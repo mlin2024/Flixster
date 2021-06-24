@@ -88,8 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public void bind(Movie movie) {
             Glide.with(context)
                     .load(movie.getPoster_path())
-                    //.placeholder(R.drawable.placeholder)
-                    //.error(R.drawable.imagenotfound)
+                    .placeholder(R.drawable.flicks_movie_placeholder)
                     .into(posterImageView);
             //titleTextView.setText(movie.getTitle());
             //overviewTextView.setText(movie.getOverview());
