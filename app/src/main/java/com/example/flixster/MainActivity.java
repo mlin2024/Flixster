@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
                     Log.i(TAG, "Results: "+ results.toString());
-                    Log.i(TAG, "Movies: "+ movies.toString());
 
                     // Turn the results JSON array into an ArrayList, and adds these movies to the movie ArrayList
                     movies.addAll(Movie.fromJsonArray(results));
+                    Log.i(TAG, "Movies: "+ movies.toString());
 
                     // Notify the adapter that the data set has changed
                     movieAdapter.notifyDataSetChanged();

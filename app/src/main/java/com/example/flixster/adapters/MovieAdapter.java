@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,9 +87,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         // Binds a movie into the ViewHolder
         public void bind(Movie movie) {
+            String imagePath;
+            int placeholderImage;
+
+            // Find whether to load the poster or backdrop based on orientation
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) imagePath = movie.getPoster_path();
+            else imagePath = movie.getBackdrop_path();
+
+            // Find which placeholder image to use based on orientation
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) placeholderImage = R.drawable.flicks_movie_placeholder;
+            else placeholderImage = R.drawable.flicks_backdrop_placeholder;
+
             Glide.with(context)
-                    .load(movie.getPoster_path())
-                    .placeholder(R.drawable.flicks_movie_placeholder)
+                    .load(imagePath)
+                    .placeholder(placeholderImage)
                     .into(posterImageView);
             //titleTextView.setText(movie.getTitle());
             //overviewTextView.setText(movie.getOverview());

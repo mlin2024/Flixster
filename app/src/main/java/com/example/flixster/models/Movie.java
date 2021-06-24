@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
-    String poster_path, title, overview;
+    String poster_path, backdrop_path, title, overview;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         // Assigns the variables their values based on the JSON key
         poster_path = jsonObject.getString("poster_path");
+        backdrop_path = jsonObject.getString("backdrop_path");
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
     }
@@ -28,6 +29,10 @@ public class Movie {
 
     public String getPoster_path() {
         return "https://image.tmdb.org/t/p/w342/" + poster_path;
+    }
+
+    public String getBackdrop_path() {
+        return "https://image.tmdb.org/t/p/w342/" + backdrop_path;
     }
 
     public String getTitle() {
