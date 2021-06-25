@@ -12,6 +12,7 @@ import java.util.List;
 public class Movie {
     String poster_path, backdrop_path, title, overview;
     double vote_average;
+    int id;
 
     // Empty constructor
     public Movie() {};
@@ -23,6 +24,7 @@ public class Movie {
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
         vote_average = jsonObject.getDouble("vote_average");
+        id = jsonObject.getInt("id");
     }
 
     // Iterates through the JSON array of movies and makes an array of Movie objects
@@ -52,5 +54,9 @@ public class Movie {
 
     public double getVote_average() {
         return vote_average;
+    }
+
+    public int getId() {
+        return id;
     }
 }
