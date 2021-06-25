@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.databinding.ActivityMovieDetailsBinding;
 import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
@@ -35,20 +36,16 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
 
         this.context = this;
+
+        // Use ViewBinding library to reference views
+        ActivityMovieDetailsBinding binding = ActivityMovieDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Unwrap the movie that was passed in by the intent
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d(TAG, "showing details for " + movie.getTitle());
-
-        // Initialize the views
-        movieDetailsImageView = findViewById(R.id.movieDetailsImageView);
-        movieDetailsTitleTextView = findViewById(R.id.movieDetailsTitleTextView);
-        movieDetailsVoteAvgRatingBar = findViewById(R.id.movieDetailsVoteAvgRatingBar);
-        movieDetailsOverviewTextView = findViewById(R.id.movieDetailsOverviewTextView);
-        movieDetailsBackButton = findViewById(R.id.movieDetailsBackButton);
 
         String imagePath;
         int placeholderImage;
@@ -67,13 +64,13 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
                 .placeholder(placeholderImage)
                 .centerCrop() // scale image to fill the entire ImageView
                 .transform(new RoundedCornersTransformation(30, 10))
-                .into(movieDetailsImageView);
-        movieDetailsTitleTextView.setText(movie.getTitle());
-        movieDetailsVoteAvgRatingBar.setRating((float) movie.getVote_average() * 0.5f);
-        movieDetailsOverviewTextView.setText(movie.getOverview());
+                .into(binding.movieDetailsImageView);
+        binding.movieDetailsTitleTextView.setText(movie.getTitle());
+        binding.movieDetailsVoteAvgRatingBar.setRating((float) movie.getVote_average() * 0.5f);
+        binding.movieDetailsOverviewTextView.setText(movie.getOverview());
 
         // End this activity when back button clicked
-        movieDetailsBackButton.setOnClickListener(new View.OnClickListener() {
+        binding.movieDetailsBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
