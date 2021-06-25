@@ -20,6 +20,9 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixster.databinding.ActivityMovieDetailsBinding;
 import com.example.flixster.models.Movie;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +41,7 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
     Movie movie;
 
     ImageView movieDetailsImageView;
+    YouTubePlayerFragment movieDetailsYouTubeFragment;
     TextView movieDetailsTitleTextView;
     RatingBar movieDetailsVoteAvgRatingBar;
     TextView movieDetailsOverviewTextView;
@@ -88,12 +92,8 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
             }
         });
 
-        // Define intent to go to MovieTrailerActivity
-        Intent intent = new Intent(context, MovieTrailerActivity.class);
-        // Wrap the movie in a parcel and attach it to the intent so it can be sent along with it
-        intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
-
         // Get youtube video info
+        movieDetailsYouTubeFragment = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.movieDetailsYouTubeFragment);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(VIDEO_API_URL_1 + movie.getId() + VIDEO_API_URL_2, new JsonHttpResponseHandler() {
             @Override
@@ -109,7 +109,20 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
                     for (int q = 0; q < results.length(); q++) {
                         if (results.getJSONObject(q).getString("site").equals("YouTube")) {
                             found = true;
-                            intent.putExtra(String.class.getSimpleName(), Parcels.wrap(results.getJSONObject(q).getString("key")));
+                            String youtubeKey = results.getJSONObject(q).getString("key");
+                            movieDetailsYouTubeFragment.initialize(getString(R.string.youtube_api_key),
+                                    new YouTubePlayer.OnInitializedListener() {
+                                        @Override
+                                        public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                                            YouTubePlayer youTubePlayer, boolean b) {
+                                            // do any work here to cue video, play video, etc.
+                                            youTubePlayer.cueVideo(youtubeKey);
+                                        }
+                                        @Override
+                                        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                                        }
+                                    });
                             break;
                         }
                     }
@@ -126,13 +139,6 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
             @Override
             public void onFailure(int i, Headers headers, String s, Throwable throwable) {
                 Log.e(TAG, "onFailure called", throwable);
-            }
-        });
-
-        binding.movieDetailsImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(intent);
             }
         });
     }

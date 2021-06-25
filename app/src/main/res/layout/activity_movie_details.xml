@@ -27,6 +27,13 @@
                 android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/avatars" />
 
+            <fragment
+                android:id="@+id/movieDetailsYouTubeFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.youtube.player.YouTubePlayerFragment">
+            </fragment>
+
             <TextView
                 android:id="@+id/movieDetailsTitleTextView"
                 android:layout_width="match_parent"
