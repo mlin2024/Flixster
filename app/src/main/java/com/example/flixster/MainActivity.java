@@ -23,8 +23,8 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
-    public final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + getString(R.string.tmdb_api_key);
     public static final String TAG = "MainActivity";
+    public String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=";
 
     List<Movie> movies;
 
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NOW_PLAYING_URL += getString(R.string.tmdb_api_key);
 
         movies = new ArrayList<>();
 
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray results = jsonObject.getJSONArray("results");
                     Log.i(TAG, "Results: "+ results.toString());
 
-                    // Turn the results JSON array into an ArrayList, and adds these movies to the movie ArrayList
+                    // Turn the results JSON array into an ArrayList, and add these movies to the movie ArrayList
                     movies.addAll(Movie.fromJsonArray(results));
                     Log.i(TAG, "Movies: "+ movies.toString());
 
