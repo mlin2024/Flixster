@@ -74,8 +74,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     // Create new ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView posterImageView;
-        //TextView titleTextView;
-        //TextView overviewTextView;
         FlowTextView flowTextView;
 
         // Viewholder constructor

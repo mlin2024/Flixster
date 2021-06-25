@@ -3,9 +3,12 @@ package com.example.flixster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,7 +18,7 @@ import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
     public static final String TAG = "MovieDetailsActivity";
 
     Context context;
@@ -24,7 +27,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     ImageView movieDetailsImageView;
     TextView movieDetailsTitleTextView;
     RatingBar movieDetailsVoteAvgRatingBar;
-    TextView movieOverviewTitleTextView;
+    TextView movieDetailsOverviewTextView;
+    Button movieDetailsBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movieDetailsImageView = findViewById(R.id.movieDetailsImageView);
         movieDetailsTitleTextView = findViewById(R.id.movieDetailsTitleTextView);
         movieDetailsVoteAvgRatingBar = findViewById(R.id.movieDetailsVoteAvgRatingBar);
-        movieOverviewTitleTextView = findViewById(R.id.movieDetailsOverviewTextView);
+        movieDetailsOverviewTextView = findViewById(R.id.movieDetailsOverviewTextView);
+        movieDetailsBackButton = findViewById(R.id.movieDetailsBackButton);
 
         String imagePath;
         int placeholderImage;
@@ -61,6 +66,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .into(movieDetailsImageView);
         movieDetailsTitleTextView.setText(movie.getTitle());
         movieDetailsVoteAvgRatingBar.setRating((float) movie.getVote_average() * 0.5f);
-        movieOverviewTitleTextView.setText(movie.getOverview());
+        movieDetailsOverviewTextView.setText(movie.getOverview());
+
+        // End this activity when back button clicked
+        movieDetailsBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
