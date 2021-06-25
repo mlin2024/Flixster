@@ -44,4 +44,5 @@ dependencies {
     compile 'com.github.deano2390:FlowTextView:2.0.5'
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
 }

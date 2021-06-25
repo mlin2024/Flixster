@@ -23,6 +23,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import uk.co.deanwild.flowtextview.FlowTextView;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -102,6 +103,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             Glide.with(context)
                     .load(imagePath)
                     .placeholder(placeholderImage)
+                    .centerCrop() // scale image to fill the entire ImageView
+                    .transform(new RoundedCornersTransformation(30, 10))
                     .into(posterImageView);
             flowTextView.setText(movie.getTitle().toUpperCase() + "\n" + movie.getOverview());
         }

@@ -18,6 +18,8 @@ import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
     public static final String TAG = "MovieDetailsActivity";
 
@@ -63,6 +65,8 @@ public class MovieDetailsActivity<ButtonView> extends AppCompatActivity {
         Glide.with(context)
                 .load(imagePath)
                 .placeholder(placeholderImage)
+                .centerCrop() // scale image to fill the entire ImageView
+                .transform(new RoundedCornersTransformation(30, 10))
                 .into(movieDetailsImageView);
         movieDetailsTitleTextView.setText(movie.getTitle());
         movieDetailsVoteAvgRatingBar.setRating((float) movie.getVote_average() * 0.5f);
