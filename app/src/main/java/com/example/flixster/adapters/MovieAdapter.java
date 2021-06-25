@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -69,7 +72,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     // Create new ViewHolder class
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView posterImageView;
         //TextView titleTextView;
         //TextView overviewTextView;
@@ -80,9 +83,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             super(itemView);
 
             posterImageView = itemView.findViewById(R.id.posterImageView);
-            //titleTextView = itemView.findViewById(R.id.titleTextView);
-            //overviewTextView = itemView.findViewById(R.id.overviewTextView);
             flowTextView = itemView.findViewById((R.id.flowTextView));
+
+            itemView.setOnClickListener(this);
         }
 
         // Binds a movie into the ViewHolder
@@ -102,9 +105,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .load(imagePath)
                     .placeholder(placeholderImage)
                     .into(posterImageView);
-            //titleTextView.setText(movie.getTitle());
-            //overviewTextView.setText(movie.getOverview());
             flowTextView.setText(movie.getTitle().toUpperCase() + "\n" + movie.getOverview());
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) { // Check if position is valid
+                Movie movie = movies.get(position);
+
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+
+                // Wrap the movie in a parcel and attach it to the intent so it can be sent along with it
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                context.startActivity(intent);
+            }
         }
     }
 }

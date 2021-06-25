@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<Movie> movies;
 
+    RecyclerView moviesRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         movies = new ArrayList<>();
 
-        RecyclerView moviesRecyclerView = findViewById(R.id.moviesRecyclerView);
+        moviesRecyclerView = findViewById(R.id.moviesRecyclerView);
 
         // Create an Adapter
         MovieAdapter movieAdapter = new MovieAdapter(this, movies);
