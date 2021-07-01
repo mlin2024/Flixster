@@ -51,7 +51,7 @@ behavior, but as a developer I have learned to not look a gift horse in the mout
 
 ## License
 
-    Copyright [2021] [Meghan Lin]
+    Copyright 2021 Meghan Lin
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
